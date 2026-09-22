@@ -1,0 +1,2 @@
+ruleDirs:
+  - node_modules/emilint/ast-grep/rules

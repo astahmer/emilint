@@ -1,0 +1,31 @@
+{
+  "name": "emilint",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./oxlint": "./dist/oxlint/index.mjs",
+    "./ast-grep/rules/*": "./ast-grep/rules/*",
+    "./profiles/effect/oxlint": "./profiles/effect/oxlint/index.mjs",
+    "./profiles/effect/ast-grep/rules/*": "./profiles/effect/ast-grep/rules/*",
+    "./configs/*": "./configs/*"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test:ast-grep": "ast-grep test --config sgconfig.yml --skip-snapshot-tests",
+    "test:effect-ast-grep": "ast-grep test --config profiles/effect/sgconfig.yml --skip-snapshot-tests",
+    "test:oxlint": "node scripts/check-oxlint.mjs",
+    "fmt:check": "oxfmt --check .",
+    "prepack": "pnpm build",
+    "test": "pnpm test:ast-grep && pnpm test:effect-ast-grep && pnpm test:oxlint"
+  },
+  "devDependencies": {
+    "@ast-grep/cli": "0.45.3",
+    "esbuild": "0.28.2",
+    "oxfmt": "0.68.0",
+    "oxlint": "1.82.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

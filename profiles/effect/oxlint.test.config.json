@@ -1,0 +1,24 @@
+{
+  "jsPlugins": [
+    {
+      "name": "effect-antislop",
+      "specifier": "./oxlint/index.mjs"
+    }
+  ],
+  "rules": {
+    "effect-antislop/no-domain-effect-run": [
+      "error",
+      {
+        "domainPaths": ["/domain/"],
+        "excludePaths": []
+      }
+    ],
+    "effect-antislop/no-silent-error-swallow": [
+      "error",
+      {
+        "implementationPaths": ["/implementation/"],
+        "excludePaths": []
+      }
+    ]
+  }
+}

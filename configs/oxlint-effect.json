@@ -1,0 +1,18 @@
+{
+  "jsPlugins": [
+    {
+      "name": "effect-antislop",
+      "specifier": "emilint/profiles/effect/oxlint"
+    }
+  ],
+  "rules": {
+    "effect-antislop/no-domain-effect-run": "error",
+    "effect-antislop/no-effect-context-reprovide": "error",
+    "effect-antislop/no-catch-if-tagged-error": "error",
+    "effect-antislop/no-service-flat-map-facade": "error",
+    "effect-antislop/no-fallible-database-promise": "error",
+    "effect-antislop/no-untyped-readable-stream-error": "error",
+    "effect-antislop/no-sequential-effect-yield-in-loop": "warn",
+    "effect-antislop/no-silent-error-swallow": "error"
+  }
+}
