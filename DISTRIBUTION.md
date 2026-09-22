@@ -74,8 +74,8 @@ ast-grep YAML rules, JSON/YAML configs, fixtures, and its generated Oxlint
 entrypoints. Git dependency is simpler while we do not need registry versions.
 Revisit JSR if we want a versioned registry and its package discovery/docs.
 
-For one-off local integration, `pnpm pack` can still inspect the package
-contents; it is not the cross-machine install path. For agent skill
+For one-off package-content inspection, run `pnpm build` followed by
+`pnpm pack`; it is not the cross-machine install path. For agent skill
 distribution, use the separate [`agents` repository](https://github.com/astahmer/agents).
 
 ## Version and validation policy
@@ -83,7 +83,8 @@ distribution, use the separate [`agents` repository](https://github.com/astahmer
 - Node `>=20.19.0` is required.
 - The package is developed and checked with Oxlint `1.82.0`, ast-grep CLI
   `0.45.3`, and Oxfmt `0.68.0`.
-- `pnpm build` regenerates the committed Oxlint `.mjs` artifact before packing.
+- Run `pnpm build` before committing rule changes or packing. Git dependency
+  consumers use the committed `.mjs` output and do not need build scripts.
 - `pnpm test` validates emilint's own rule fixtures; it is not a command that
   automatically scans a consuming repository.
 - Before upgrading, run the consumer's focused lint checks and inspect new
