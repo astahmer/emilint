@@ -8,7 +8,8 @@
     "./ast-grep/rules/*": "./ast-grep/rules/*",
     "./profiles/effect/oxlint": "./profiles/effect/oxlint/index.mjs",
     "./profiles/effect/ast-grep/rules/*": "./profiles/effect/ast-grep/rules/*",
-    "./configs/*": "./configs/*"
+    "./configs/*": "./configs/*",
+    "./skills/*": "./skills/*"
   },
   "scripts": {
     "build": "node scripts/build.mjs",

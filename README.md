@@ -1,10 +1,12 @@
 # emilint
 
-Reusable Oxlint and ast-grep policy for TypeScript projects.
+Reusable code-quality rules and engineering practice profiles for TypeScript
+projects.
 
-The repository name is `emilint`; the rule family is `antislop`. The package is
-split into profiles so a project can opt into the generic baseline and add the
-Effect rules only when it actually uses Effect.
+The repository name is `emilint`; the executable rule family is `antislop`.
+The package is split into profiles so a project can opt into the generic
+baseline, add the Effect rules only when it actually uses Effect, and vendor
+portable workflow skills only where they fit.
 
 ## Use from a project
 
@@ -84,6 +86,20 @@ in the repository and `pnpm build` regenerates `dist/oxlint/index.mjs`.
 
 Every rule has one canonical checker. Semantic and scope-sensitive rules live
 in Oxlint; syntax-only rules live in ast-grep.
+
+## Portable skills
+
+The [`skills/`](skills/README.md) directory contains opt-in, product-neutral
+workflow skills extracted from the repeated `AGENTS.md` and `SKILL.md` guidance
+across the projects under `~/dev`. They cover runtime boundaries, actor state,
+durable async work, safe transformations, focused validation, library
+architecture, frontend evidence audits, and generated artifacts.
+
+Vendor only the skills a project needs. Keep project commands, paths, runtime
+choices, and exceptions in that project's local AGENTS or skill overlay.
+
+See [PRACTICES-SURVEY.md](PRACTICES-SURVEY.md) for the extraction decisions
+and the rules that deliberately stayed local.
 
 ## Local validation
 
