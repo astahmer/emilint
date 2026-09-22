@@ -168,9 +168,9 @@ The package-first distribution is intentional:
    cannot type-strip a `.ts` plugin under `node_modules`.
 3. ast-grep reads the installed rule directory.
 4. Project config owns paths, boundary exceptions, and profile selection.
-5. `pnpm build` owns the committed Oxlint artifact, and the global agent skill
-   can later be generated or synchronized from this
-   repository without making CI depend on a Home Manager deployment.
+5. `pnpm build` owns the committed Oxlint artifact. Portable agent guidance is
+   owned by [`astahmer/agents`](https://github.com/astahmer/agents), while
+   `nixfiles` assembles the pinned tool and skill inputs for machine deployment.
 
 The concrete package, tarball, GitHub release, skill-vendoring, and update
 workflows are documented in [`DISTRIBUTION.md`](DISTRIBUTION.md). There is no

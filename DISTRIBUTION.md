@@ -1,33 +1,37 @@
 # Distribution and adoption
 
-`emilint` has two consumption surfaces:
+`emilint` is consumed directly from its public GitHub repository. Portable
+agent guidance is maintained separately in
+[`astahmer/agents`](https://github.com/astahmer/agents).
 
-- executable Oxlint and ast-grep rules, kept as a versioned package dependency;
-- portable `SKILL.md` files, which a repository may vendor into its own agent
-  skill tree.
-
-The package is private in this repository. Until it is published to a registry,
-use the tarball workflow below to test or distribute a pinned build.
-
-## Recommended: install the package
-
-After publishing to a registry or serving it from an internal registry:
+## Install from GitHub
 
 ```bash
-pnpm add --save-dev emilint@<version>
+pnpm add --save-dev astahmer/emilint#main
 ```
 
-Keep the dependency in the consumer's lockfile. The package exposes these
-stable surfaces:
+pnpm resolves the branch to a commit and records that commit in the consumer's
+`pnpm-lock.yaml`. Commit both `package.json` and the lockfile. For a fully
+immutable manifest declaration, use a full commit hash instead of `main`:
 
-| Surface                                    | Use                                           |
-| ------------------------------------------ | --------------------------------------------- |
-| `emilint/oxlint`                           | Generic Oxlint plugin, generated as `.mjs`    |
-| `emilint/profiles/effect/oxlint`           | Opt-in Effect Oxlint plugin                   |
-| `emilint/ast-grep/rules/*`                 | Generic structural rules                      |
-| `emilint/profiles/effect/ast-grep/rules/*` | Effect structural rules                       |
-| `emilint/configs/*`                        | Starting-point Oxlint and ast-grep configs    |
-| `emilint/skills/*`                         | Portable agent skills for selective vendoring |
+```json
+{
+  "devDependencies": {
+    "emilint": "github:astahmer/emilint#<full-commit-hash>"
+  }
+}
+```
+
+The package exposes these stable surfaces:
+
+| Surface                                    | Use                                        |
+| ------------------------------------------ | ------------------------------------------ |
+| `emilint/oxlint`                           | Generic Oxlint plugin, generated as `.mjs` |
+| `emilint/profiles/effect/oxlint`           | Opt-in Effect Oxlint plugin                |
+| `emilint/ast-grep/rules/*`                 | Generic structural rules                   |
+| `emilint/profiles/effect/ast-grep/rules/*` | Effect structural rules                    |
+| `emilint/configs/*`                        | Starting-point Oxlint and ast-grep configs |
+| `emilint/skills/*`                         | Lint companion skill documentation         |
 
 Configure Oxlint with the snippets in [`README.md`](README.md), or merge the
 corresponding `jsPlugins` and `rules` entries from
@@ -54,69 +58,25 @@ The `testConfigs` in emilint's repository configs point at emilint's own rule
 fixtures. A consuming repository normally needs only `ruleDirs`; keep its own
 rule tests in its own test directory.
 
-## Current option: install a packed tarball
+## Updating
 
-Build the same artifact that a registry would receive:
+The branch selector is convenient for starting a project; the lockfile still
+keeps installs reproducible. To move to newer rules, update the Git dependency
+and commit the resulting lockfile. For a commit-pinned manifest, replace its
+hash with the new emilint commit before running `pnpm install`.
 
-```bash
-mkdir -p .artifacts
-pnpm pack --pack-destination .artifacts
-```
+## JSR later
 
-Install the resulting `emilint-<version>.tgz` in another repository:
+JSR supports installation through pnpm, but publishing requires a JSR-scoped
+package name, a versioned `jsr.json`, and `jsr publish`. Its npm-compatible
+package is generated from declared module exports; emilint also needs to ship
+ast-grep YAML rules, JSON/YAML configs, fixtures, and its generated Oxlint
+entrypoints. Git dependency is simpler while we do not need registry versions.
+Revisit JSR if we want a versioned registry and its package discovery/docs.
 
-```bash
-pnpm add --save-dev /absolute/path/to/emilint-<version>.tgz
-```
-
-This is useful for local integration and release testing. It is not a good
-long-term dependency reference because a local path is not available to other
-machines or CI.
-
-## GitHub release assets
-
-When a GitHub repository and release process exist, upload the packed tarball
-as a release asset:
-
-```bash
-gh release create v<version> .artifacts/emilint-<version>.tgz \
-  --title v<version> --generate-notes
-```
-
-Consumers can then pin the immutable release asset:
-
-```bash
-pnpm add --save-dev \
-  https://github.com/<owner>/emilint/releases/download/v<version>/emilint-<version>.tgz
-```
-
-`gh` is useful for publishing and downloading a release asset; it is not a
-rule-selection tool. `git` is useful for source checkout but does not create a
-stable package boundary. `shadcn` is not a fit because emilint is a package of
-lint plugins, structural rules, and agent skills rather than UI components.
-
-## Vendor a selected skill
-
-Keep lint rules as a package dependency when possible. Vendor only a skill when
-the consuming agent must have a checked-in local copy or the project cannot
-read skills from `node_modules`.
-
-From an installed package:
-
-```bash
-mkdir -p .agents/skills/focused-validation
-cp node_modules/emilint/skills/focused-validation/SKILL.md \
-  .agents/skills/focused-validation/SKILL.md
-```
-
-From a packed tarball, extract it to a temporary directory and copy only the
-selected `skills/<name>/SKILL.md` file. Keep the source version or release tag
-in the consuming repository's skill index so updates can be audited.
-
-To update a vendored skill, download or install the new pinned package, repeat
-the copy, and review the resulting diff. Do not silently replace local
-commands, paths, or deliberate exceptions; keep those in the project's local
-AGENTS or skill overlay.
+For one-off local integration, `pnpm pack` can still inspect the package
+contents; it is not the cross-machine install path. For agent skill
+distribution, use the separate [`agents` repository](https://github.com/astahmer/agents).
 
 ## Version and validation policy
 

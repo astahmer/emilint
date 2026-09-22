@@ -1,25 +1,23 @@
 # emilint
 
-Reusable code-quality rules and engineering practice profiles for TypeScript
-projects.
+Reusable code-quality rules and profiles for TypeScript projects.
 
 The repository name is `emilint`; the executable rule family is `antislop`.
 The package is split into profiles so a project can opt into the generic
-baseline, add the Effect rules only when it actually uses Effect, and vendor
-portable workflow skills only where they fit.
+baseline or add the Effect rules only when it actually uses Effect.
 
 ## Use from a project
 
-Install this repository as a package dependency once it is published or served
-from an internal registry:
+Install the public GitHub repository directly:
 
 ```bash
-pnpm add --save-dev emilint
+pnpm add --save-dev astahmer/emilint#main
 ```
 
-For the current private-package tarball workflow, GitHub release distribution,
-skill vendoring, and update policy, see
-[`DISTRIBUTION.md`](DISTRIBUTION.md).
+pnpm records the resolved Git commit in `pnpm-lock.yaml`; commit that lockfile
+so local installs and CI use the same rules. Replace `main` with a commit hash
+in `package.json` too when you want the dependency declaration itself pinned.
+See [`DISTRIBUTION.md`](DISTRIBUTION.md) for update guidance.
 
 Load the generic Oxlint plugin by package export:
 
@@ -105,19 +103,17 @@ The generic Oxlint starter config enables 13 of the 14 generic rules.
 need module replacement. The complete rule IDs and profile status are in
 [`CATALOG.md`](CATALOG.md).
 
-## Portable skills
+## Portable agent guidance
 
-The [`skills/`](skills/README.md) directory contains opt-in, product-neutral
-workflow skills extracted from the repeated `AGENTS.md` and `SKILL.md` guidance
-across the projects under `~/dev`. They cover runtime boundaries, actor state,
-durable async work, safe transformations, focused validation, library
-architecture, frontend evidence audits, and generated artifacts.
+Portable workflow skills extracted from the projects under `~/dev` are
+maintained in the [`astahmer/agents`](https://github.com/astahmer/agents)
+repository. This package intentionally does not duplicate that general skill
+catalog; it owns executable lint rules and the two lint companion skills under
+`skills/`.
 
-Vendor only the skills a project needs. Keep project commands, paths, runtime
-choices, and exceptions in that project's local AGENTS or skill overlay.
-
-See [PRACTICES-SURVEY.md](PRACTICES-SURVEY.md) for the extraction decisions
-and the rules that deliberately stayed local.
+Keep project commands, paths, runtime choices, and exceptions in the project's
+local AGENTS or skill overlay. The practice extraction decisions live in the
+[`agents` survey](https://github.com/astahmer/agents/blob/main/PRACTICES-SURVEY.md).
 
 ## Local validation
 
