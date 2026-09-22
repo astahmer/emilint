@@ -17,6 +17,10 @@ from an internal registry:
 pnpm add --save-dev emilint
 ```
 
+For the current private-package tarball workflow, GitHub release distribution,
+skill vendoring, and update policy, see
+[`DISTRIBUTION.md`](DISTRIBUTION.md).
+
 Load the generic Oxlint plugin by package export:
 
 ```json
@@ -40,8 +44,17 @@ Load structural rules from the installed package in `sgconfig.yml`:
 ```yaml
 ruleDirs:
   - node_modules/emilint/ast-grep/rules
-testConfigs:
-  - testDir: node_modules/emilint/ast-grep/tests
+```
+
+The starting-point file is also available at
+`node_modules/emilint/configs/sgconfig-generic.yml`. Keep `testConfigs` for
+emilint's own fixtures out of a consumer config unless the consumer is
+intentionally running those upstream tests.
+
+Run the configured structural profile with:
+
+```bash
+pnpm exec ast-grep scan --config sgconfig.yml src
 ```
 
 Use project paths or command-line globs to keep boundary rules away from public
@@ -87,6 +100,11 @@ in the repository and `pnpm build` regenerates `dist/oxlint/index.mjs`.
 Every rule has one canonical checker. Semantic and scope-sensitive rules live
 in Oxlint; syntax-only rules live in ast-grep.
 
+The generic Oxlint starter config enables 13 of the 14 generic rules.
+`antislop/no-module-mocking` is deliberately opt-in because some test suites
+need module replacement. The complete rule IDs and profile status are in
+[`CATALOG.md`](CATALOG.md).
+
 ## Portable skills
 
 The [`skills/`](skills/README.md) directory contains opt-in, product-neutral
@@ -111,5 +129,9 @@ those tools as dev dependencies in a published package workflow:
 pnpm test
 ```
 
-See [CATALOG.md](CATALOG.md) for rule intent and [SURVEY.md](SURVEY.md) for
-the extraction decisions from the projects under `~/dev`.
+This command tests emilint itself. It does not automatically lint a consuming
+repository; consumers run their own `oxlint` and `ast-grep scan` commands.
+
+See [CATALOG.md](CATALOG.md) for rule intent and status, [DISTRIBUTION.md](DISTRIBUTION.md)
+for adoption and updates, and [SURVEY.md](SURVEY.md) for the extraction
+decisions from the projects under `~/dev`.

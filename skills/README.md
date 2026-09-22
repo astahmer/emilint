@@ -17,4 +17,5 @@ paths, commands, framework choices, and policy exceptions.
 
 These skills do not replace project-specific runbooks. They provide the
 portable contract; the project keeps its concrete commands and local ownership
-rules.
+rules. See [`DISTRIBUTION.md`](../DISTRIBUTION.md) for package, tarball, and
+selective-vendoring workflows.

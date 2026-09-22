@@ -172,5 +172,11 @@ The package-first distribution is intentional:
    can later be generated or synchronized from this
    repository without making CI depend on a Home Manager deployment.
 
+The concrete package, tarball, GitHub release, skill-vendoring, and update
+workflows are documented in [`DISTRIBUTION.md`](DISTRIBUTION.md). There is no
+custom emilint downloader: use the package manager for package dependencies,
+`pnpm pack` for a reproducible local artifact, and `gh` only for GitHub release
+assets.
+
 Publishing is not done in this pass. The package is still private and can be
 renamed to a scoped registry name when the registry/ownership choice is clear.

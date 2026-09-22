@@ -3,7 +3,23 @@
 Each rule states a durable contract: avoid the low-evidence shape, prefer the
 named or validated alternative, and keep the checker in exactly one tool.
 
+## Exposed rule inventory
+
+| Surface                          | Count | Enablement                                                             |
+| -------------------------------- | ----: | ---------------------------------------------------------------------- |
+| `antislop/*` Oxlint rules        |    14 | 13 in the generic starter config; `no-module-mocking` is opt-in        |
+| Generic ast-grep rules           |     9 | Load `ruleDirs`, then select paths or rules appropriate to the project |
+| `effect-antislop/*` Oxlint rules |     8 | Effect projects only; enable explicitly with path options              |
+| Effect ast-grep rules            |     4 | Effect projects only; load the Effect rule directory explicitly        |
+
+The package exports these surfaces through the paths shown in
+[`DISTRIBUTION.md`](DISTRIBUTION.md). The rule names below are unqualified;
+Oxlint IDs use the `antislop/` or `effect-antislop/` prefix shown above.
+
 ## Generic Oxlint profile
+
+The rules below are enabled by `configs/oxlint-generic.json` unless marked
+`opt-in`.
 
 | Rule                                        | Avoid                                                                               | Prefer                                                      | Why                                                                             |
 | ------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
@@ -11,7 +27,7 @@ named or validated alternative, and keep the checker in exactly one tool.
 | `no-broad-object-parameters`                | Function inputs typed as `object`                                                   | A named owner type or boundary-decoded value                | Broad inputs erase the caller contract.                                         |
 | `no-conditional-empty-object-spread`        | Conditional spreads that add `{}`                                                   | An explicit branch or named builder                         | Output shape should remain visible.                                             |
 | `no-known-value-widening`                   | Widening a known initializer to `object`, `Record`, or another anonymous broad type | Preserve inference, `satisfies`, or a named owner contract  | Widening throws away evidence the initializer already has.                      |
-| `no-module-mocking`                         | Vitest/Jest module replacement in application tests                                 | Dependency injection or a faithful in-memory implementation | Mocks can hide broken wiring. Opt in only when the test architecture allows it. |
+| `no-module-mocking` `[opt-in]`              | Vitest/Jest module replacement in application tests                                 | Dependency injection or a faithful in-memory implementation | Mocks can hide broken wiring. Enable only when the test architecture allows it. |
 | `no-reflect-apply`                          | Global `Reflect.apply`                                                              | A typed direct call or named adapter                        | Reflection hides the callable contract.                                         |
 | `no-reflect-get`                            | Global `Reflect.get`                                                                | Typed property access or a validated adapter                | Reflection bypasses ordinary type evidence.                                     |
 | `no-runtime-typeof`                         | `typeof` as a decoder for unparsed values                                           | Decode at the boundary, then narrow typed data              | Runtime probes are not a substitute for a contract.                             |
