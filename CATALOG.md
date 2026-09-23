@@ -9,7 +9,7 @@ named or validated alternative, and keep the checker in exactly one tool.
 | -------------------------------- | ----: | ---------------------------------------------------------------------- |
 | `antislop/*` Oxlint rules        |    14 | 13 in the generic starter config; `no-module-mocking` is opt-in        |
 | Generic ast-grep rules           |     9 | Load `ruleDirs`, then select paths or rules appropriate to the project |
-| `effect-antislop/*` Oxlint rules |     8 | Effect projects only; enable explicitly with path options              |
+| `effect-antislop/*` Oxlint rules |     9 | Effect projects only; enable explicitly with path options              |
 | Effect ast-grep rules            |     4 | Effect projects only; load the Effect rule directory explicitly        |
 
 The package exports these surfaces through the paths shown in
@@ -57,6 +57,8 @@ The rules below are enabled by `configs/oxlint-generic.json` unless marked
 The Effect profile is opt-in and accepts path fragments so it does not assume
 `packages/backend`, `apps/api`, or any other repository layout.
 
+- `prefer-datetime-duration-arithmetic`: keep elapsed-time math in Effect
+  `DateTime`/`Duration` values; convert to `Date` only at the boundary.
 - `no-domain-effect-run`: preserve `Effect` programs in domain code; run them
   only at an outer application or platform edge.
 - `no-effect-context-reprovide`: do not capture and re-provide context inside

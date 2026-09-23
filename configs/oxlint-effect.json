@@ -6,6 +6,7 @@
     }
   ],
   "rules": {
+    "effect-antislop/prefer-datetime-duration-arithmetic": "error",
     "effect-antislop/no-domain-effect-run": "error",
     "effect-antislop/no-effect-context-reprovide": "error",
     "effect-antislop/no-catch-if-tagged-error": "error",

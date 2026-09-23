@@ -29,6 +29,35 @@ const memberName = (node) => {
   return node.property?.type === "Identifier" ? node.property.name : undefined;
 };
 
+const isCallToMember = (node, name) =>
+  node?.type === "CallExpression" &&
+  node.callee?.type === "MemberExpression" &&
+  memberName(node.callee) === name;
+
+const isEpochMillisecondsRead = (node) => {
+  if (node?.type !== "CallExpression") return false;
+  if (isCallToMember(node, "getTime") && node.arguments.length === 0) return true;
+  if (isCallToMember(node, "toEpochMillis") && node.arguments.length === 1) return true;
+  return (
+    isCallToMember(node, "now") &&
+    node.arguments.length === 0 &&
+    node.callee.object?.type === "Identifier" &&
+    node.callee.object.name === "Date"
+  );
+};
+
+const hasEpochMillisecondsArithmetic = (node) => {
+  if (node?.type !== "BinaryExpression" || (node.operator !== "+" && node.operator !== "-")) {
+    return false;
+  }
+  return (
+    isEpochMillisecondsRead(node.left) ||
+    isEpochMillisecondsRead(node.right) ||
+    hasEpochMillisecondsArithmetic(node.left) ||
+    hasEpochMillisecondsArithmetic(node.right)
+  );
+};
+
 const isEffectMethod = (node, method) =>
   node.callee?.type === "MemberExpression" &&
   node.callee.object?.type === "Identifier" &&
@@ -37,6 +66,7 @@ const isEffectMethod = (node, method) =>
 
 const isEffectExecution = (node) =>
   isEffectMethod(node, "runPromise") ||
+  isEffectMethod(node, "runPromiseWith") ||
   isEffectMethod(node, "runPromiseExit") ||
   isEffectMethod(node, "runSync") ||
   isEffectMethod(node, "runSyncExit");
@@ -88,6 +118,25 @@ const effectOptionsSchema = [
 const plugin = {
   meta: { name: "effect-antislop" },
   rules: {
+    "prefer-datetime-duration-arithmetic": {
+      meta: { schema: effectOptionsSchema },
+      create(context) {
+        return {
+          NewExpression(node) {
+            if (/\.(?:test|spec|bench)\.[cm]?[jt]sx?$/u.test(normalizePath(context.getFilename())))
+              return;
+            if (!inScope(context, "paths", ["/src/"])) return;
+            if (node.callee?.type !== "Identifier" || node.callee.name !== "Date") return;
+            if (!node.arguments.some(hasEpochMillisecondsArithmetic)) return;
+            context.report({
+              node,
+              message:
+                "Keep elapsed-time arithmetic in Effect DateTime/Duration, converting to `Date` only at the boundary. Use `DateTime.add`/`subtract` for calendar-unit semantics.",
+            });
+          },
+        };
+      },
+    },
     "no-domain-effect-run": {
       meta: { schema: effectOptionsSchema },
       create(context) {

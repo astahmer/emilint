@@ -92,6 +92,7 @@ JavaScript/TypeScript profile:
 - `no-untyped-readable-stream-error`
 - `no-sequential-effect-yield-in-loop`
 - `no-silent-error-swallow`
+- `prefer-datetime-duration-arithmetic`
 - `no-local-effect-provide-wrapper`
 - `no-unnecessary-effect-provider-wrapper`
 - `no-variadic-effect-schema-literal`
@@ -102,9 +103,9 @@ The Oxlint profile accepts `domainPaths`, `implementationPaths`,
 path fragments such as `domain`, `ports`, `use-cases`, `db`, and `src`, not one
 project's absolute or package-specific paths.
 
-`no-silent-error-swallow` is the one new extraction in this pass. It comes from
-Emisoup's contextual plugin and now uses the same configurable implementation
-scope as the other Effect rules.
+`no-silent-error-swallow` and `prefer-datetime-duration-arithmetic` came from
+Emisoup's contextual plugin. The date rule uses a configurable source-path
+scope so each project can apply it to its own application code.
 
 ## Not extracted
 
