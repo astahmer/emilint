@@ -12,6 +12,7 @@
     "antislop/no-known-value-widening": "error",
     "antislop/no-reflect-apply": "error",
     "antislop/no-reflect-get": "error",
+    "antislop/no-passthrough-variable": "error",
     "antislop/no-runtime-typeof": "error",
     "antislop/no-unsafe-dictionary-type": "error",
     "antislop/no-unknown-parameters": "error",

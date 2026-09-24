@@ -35,6 +35,12 @@ const checks = [
   ["oxlint.test.config.json", "tests/oxlint/invalid-reflect.ts", 1, "invalid reflect fixture"],
   ["oxlint.test.config.json", "tests/oxlint/valid-generic.ts", 0, "valid generic fixture"],
   [
+    "oxlint.test.config.json",
+    "tests/oxlint/valid-passthrough-variable.ts",
+    0,
+    "valid passthrough-variable fixture",
+  ],
+  [
     "profiles/effect/oxlint.test.config.json",
     "profiles/effect/tests/oxlint/adapters/valid-run.ts",
     0,
@@ -70,6 +76,7 @@ const genericViolationRules = [
   "no-known-value-widening",
   "no-module-mocking",
   "no-broad-object-parameters",
+  "no-passthrough-variable",
   "no-reflect-apply",
   "no-reflect-get",
   "no-runtime-typeof",

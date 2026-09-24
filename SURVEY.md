@@ -1,6 +1,6 @@
 # Oxlint and ast-grep survey
 
-Survey date: 2026-09-22. Scope: `/Users/astahmer/dev`, excluding `node_modules`
+Survey date: 2026-09-30. Scope: `/Users/astahmer/dev`, excluding `node_modules`
 and VCS internals.
 
 ## Inventory
@@ -46,6 +46,8 @@ selected by each consumer.
 - `no-known-value-widening`
 - `no-module-mocking` — opt in for test suites where dependency injection is
   the intended seam.
+- `no-passthrough-variable` — inline local const aliases that add no transform;
+  required snapshots and narrowings need a local suppression with its reason.
 - `no-reflect-apply`
 - `no-reflect-get`
 - `no-runtime-typeof`
@@ -147,9 +149,8 @@ scope so each project can apply it to its own application code.
   backend files.
 - `no-disable-validation`: the property is not universally forbidden; keep it
   as a product policy unless a project supplies an allowlist.
-- `no-inline-discriminant-const`, `no-singular-plural-binding-pair`, and
-  `no-passthrough-variable`: encode vocabulary or style preferences with a
-  high false-positive surface.
+- `no-inline-discriminant-const` and `no-singular-plural-binding-pair` encode
+  vocabulary or naming preferences with a high false-positive surface.
 - `no-reassigned-composite-binding`: deterministic but too opinionated for a
   shared baseline; retain it as an Emisoup strict rule if desired.
 - `prefer-object-arguments`: a reasonable local style rule, but not a general

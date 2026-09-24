@@ -98,7 +98,7 @@ in the repository and `pnpm build` regenerates `dist/oxlint/index.mjs`.
 Every rule has one canonical checker. Semantic and scope-sensitive rules live
 in Oxlint; syntax-only rules live in ast-grep.
 
-The generic Oxlint starter config enables 13 of the 14 generic rules.
+The generic Oxlint starter config enables 14 of the 15 generic rules.
 `antislop/no-module-mocking` is deliberately opt-in because some test suites
 need module replacement. The complete rule IDs and profile status are in
 [`CATALOG.md`](CATALOG.md).

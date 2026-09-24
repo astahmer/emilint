@@ -13,6 +13,10 @@ const unsafeDictionary: Record<string, unknown> = {};
 const chainedAssertion = "value" as unknown as string;
 const conditionalObject = { ...(true ? { value: 1 } : {}) };
 
+const sourceValue = "source";
+const passthroughValue = sourceValue;
+void passthroughValue;
+
 export const isText = (value: unknown) => typeof value === "string";
 export const reflectedValue = Reflect.get({ value: 1 }, "value");
 export const reflectedCall = Reflect.apply(String, undefined, ["value"]);

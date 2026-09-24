@@ -5,6 +5,7 @@ import { noConditionalEmptyObjectSpreadRule } from "./rules/no-conditional-empty
 import { noKnownValueWideningRule } from "./rules/no-known-value-widening.ts";
 import { noModuleMockingRule } from "./rules/no-module-mocking.ts";
 import { noBroadObjectParametersRule } from "./rules/no-broad-object-parameters.ts";
+import { noPassthroughVariableRule } from "./rules/no-passthrough-variable.ts";
 import { noReflectApplyRule } from "./rules/no-reflect-apply.ts";
 import { noReflectGetRule } from "./rules/no-reflect-get.ts";
 import { noRuntimeTypeofRule } from "./rules/no-runtime-typeof.ts";
@@ -24,6 +25,7 @@ const antiSlopPlugin = eslintCompatPlugin({
     "no-known-value-widening": noKnownValueWideningRule,
     "no-module-mocking": noModuleMockingRule,
     "no-broad-object-parameters": noBroadObjectParametersRule,
+    "no-passthrough-variable": noPassthroughVariableRule,
     "no-reflect-apply": noReflectApplyRule,
     "no-reflect-get": noReflectGetRule,
     "no-runtime-typeof": noRuntimeTypeofRule,
