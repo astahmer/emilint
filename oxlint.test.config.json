@@ -9,6 +9,12 @@
     "anti-slop/no-chained-type-assertions": "error",
     "anti-slop/no-conditional-empty-object-spread": "error",
     "anti-slop/no-known-value-widening": "error",
+    "anti-slop/no-export-bag": [
+      "error",
+      {
+        "excludePaths": ["tests/oxlint/invalid-generic.ts", "tests/oxlint/excluded/**"]
+      }
+    ],
     "anti-slop/no-module-mocking": "error",
     "anti-slop/no-broad-object-parameters": "error",
     "anti-slop/no-passthrough-variable": "error",

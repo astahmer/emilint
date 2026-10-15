@@ -3,6 +3,7 @@ import { eslintCompatPlugin } from "./compat.ts";
 import { noChainedTypeAssertionsRule } from "./rules/no-chained-type-assertions.ts";
 import { noConditionalEmptyObjectSpreadRule } from "./rules/no-conditional-empty-object-spread.ts";
 import { noKnownValueWideningRule } from "./rules/no-known-value-widening.ts";
+import { noExportBagRule } from "./rules/no-export-bag.ts";
 import { noModuleMockingRule } from "./rules/no-module-mocking.ts";
 import { noBroadObjectParametersRule } from "./rules/no-broad-object-parameters.ts";
 import { noPassthroughVariableRule } from "./rules/no-passthrough-variable.ts";
@@ -23,6 +24,7 @@ const antiSlopPlugin = eslintCompatPlugin({
     "no-chained-type-assertions": noChainedTypeAssertionsRule,
     "no-conditional-empty-object-spread": noConditionalEmptyObjectSpreadRule,
     "no-known-value-widening": noKnownValueWideningRule,
+    "no-export-bag": noExportBagRule,
     "no-module-mocking": noModuleMockingRule,
     "no-broad-object-parameters": noBroadObjectParametersRule,
     "no-passthrough-variable": noPassthroughVariableRule,

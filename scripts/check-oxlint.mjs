@@ -40,6 +40,25 @@ const checks = [
     0,
     "valid passthrough-variable fixture",
   ],
+  ["oxlint.test.config.json", "tests/oxlint/valid-no-export-bag.ts", 0, "valid export-bag fixture"],
+  [
+    "oxlint.test.config.json",
+    "tests/oxlint/excluded/export-bag.ts",
+    0,
+    "excluded export-bag fixture",
+  ],
+  [
+    "oxlint.test.config.json",
+    "tests/oxlint/invalid-no-export-bag.ts",
+    1,
+    "invalid export-bag fixture",
+  ],
+  [
+    "oxlint.export-bag-threshold.config.json",
+    "tests/oxlint/invalid-no-export-bag.ts",
+    0,
+    "export-bag threshold fixture",
+  ],
   [
     "profiles/effect/oxlint.test.config.json",
     "profiles/effect/tests/oxlint/adapters/valid-run.ts",
@@ -68,6 +87,16 @@ const checks = [
 
 for (const [config, fixture, expected, description] of checks) {
   assertExit(runOxlint(config, fixture), expected, description);
+}
+
+const invalidExportBagResult = runOxlint(
+  "oxlint.test.config.json",
+  "tests/oxlint/invalid-no-export-bag.ts",
+  false,
+);
+const invalidExportBagOutput = `${invalidExportBagResult.stdout ?? ""}${invalidExportBagResult.stderr ?? ""}`;
+if (!invalidExportBagOutput.includes("anti-slop(no-export-bag)")) {
+  throw new Error("invalid export-bag fixture did not exercise anti-slop/no-export-bag");
 }
 
 const genericViolationRules = [
@@ -101,5 +130,5 @@ for (const rule of genericViolationRules) {
 }
 
 console.log(
-  `Oxlint fixtures passed (${checks.length + 1} checks and ${genericViolationRules.length} rule hits).`,
+  `Oxlint fixtures passed (${checks.length + 2} checks and ${genericViolationRules.length} rule hits).`,
 );

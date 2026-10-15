@@ -10,6 +10,13 @@
     "antislop/no-broad-object-parameters": "error",
     "antislop/no-conditional-empty-object-spread": "error",
     "antislop/no-known-value-widening": "error",
+    "antislop/no-export-bag": [
+      "warn",
+      {
+        "minExports": 3,
+        "excludePaths": []
+      }
+    ],
     "antislop/no-reflect-apply": "error",
     "antislop/no-reflect-get": "error",
     "antislop/no-passthrough-variable": "error",

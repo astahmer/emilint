@@ -31,6 +31,10 @@ Load the generic Oxlint plugin by package export:
   ],
   "rules": {
     "antislop/no-chained-type-assertions": "error",
+    "antislop/no-export-bag": [
+      "warn",
+      { "minExports": 3, "excludePaths": ["src/components/ui/**", "src/index.ts"] }
+    ],
     "antislop/no-broad-object-parameters": "error",
     "antislop/no-reflect-get": "error"
   }
@@ -98,9 +102,11 @@ in the repository and `pnpm build` regenerates `dist/oxlint/index.mjs`.
 Every rule has one canonical checker. Semantic and scope-sensitive rules live
 in Oxlint; syntax-only rules live in ast-grep.
 
-The generic Oxlint starter config enables 14 of the 15 generic rules.
+The generic Oxlint starter config enables 15 of the 16 generic rules.
 `antislop/no-module-mocking` is deliberately opt-in because some test suites
-need module replacement. The complete rule IDs and profile status are in
+need module replacement. `antislop/no-export-bag` starts as a warning and takes
+`minExports` plus project-local `excludePaths` so adoption can be ratcheted
+before becoming an error. The complete rule IDs and profile status are in
 [`CATALOG.md`](CATALOG.md).
 
 ## Portable agent guidance
