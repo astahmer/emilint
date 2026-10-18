@@ -41,6 +41,36 @@ const checks = [
     "valid passthrough-variable fixture",
   ],
   [
+    "oxlint.export-bag.test.config.json",
+    "tests/oxlint/valid-export-bag.ts",
+    0,
+    "valid export-bag fixture",
+  ],
+  [
+    "oxlint.export-bag.test.config.json",
+    "tests/oxlint/invalid-export-bag.ts",
+    1,
+    "invalid export-bag fixture",
+  ],
+  [
+    "oxlint.export-bag.options.test.config.json",
+    "tests/oxlint/invalid-export-bag.ts",
+    0,
+    "custom export-bag threshold below minimum",
+  ],
+  [
+    "oxlint.export-bag.options.test.config.json",
+    "tests/oxlint/threshold-export-bag-four.ts",
+    1,
+    "custom export-bag threshold reached",
+  ],
+  [
+    "oxlint.export-bag.options.test.config.json",
+    "tests/oxlint/excluded-export-bag.ts",
+    0,
+    "excluded export-bag fixture",
+  ],
+  [
     "profiles/effect/oxlint.test.config.json",
     "profiles/effect/tests/oxlint/adapters/valid-run.ts",
     0,

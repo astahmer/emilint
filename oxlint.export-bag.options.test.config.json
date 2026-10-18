@@ -1,0 +1,17 @@
+{
+  "jsPlugins": [
+    {
+      "name": "anti-slop",
+      "specifier": "./oxlint/index.ts"
+    }
+  ],
+  "rules": {
+    "anti-slop/no-export-bag": [
+      "error",
+      {
+        "minExports": 4,
+        "excludePaths": ["**/excluded-export-bag.ts"]
+      }
+    ]
+  }
+}

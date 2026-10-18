@@ -5,12 +5,12 @@ named or validated alternative, and keep the checker in exactly one tool.
 
 ## Exposed rule inventory
 
-| Surface                          | Count | Enablement                                                             |
-| -------------------------------- | ----: | ---------------------------------------------------------------------- |
-| `antislop/*` Oxlint rules        |    15 | 14 in the generic starter config; `no-module-mocking` is opt-in        |
-| Generic ast-grep rules           |     9 | Load `ruleDirs`, then select paths or rules appropriate to the project |
-| `effect-antislop/*` Oxlint rules |     9 | Effect projects only; enable explicitly with path options              |
-| Effect ast-grep rules            |     4 | Effect projects only; load the Effect rule directory explicitly        |
+| Surface                          | Count | Enablement                                                                           |
+| -------------------------------- | ----: | ------------------------------------------------------------------------------------ |
+| `antislop/*` Oxlint rules        |    16 | 14 in the generic starter config; `no-module-mocking` and `no-export-bag` are opt-in |
+| Generic ast-grep rules           |     9 | Load `ruleDirs`, then select paths or rules appropriate to the project               |
+| `effect-antislop/*` Oxlint rules |     9 | Effect projects only; enable explicitly with path options                            |
+| Effect ast-grep rules            |     4 | Effect projects only; load the Effect rule directory explicitly                      |
 
 The package exports these surfaces through the paths shown in
 [`DISTRIBUTION.md`](DISTRIBUTION.md). The rule names below are unqualified;
@@ -26,6 +26,7 @@ The rules below are enabled by `configs/oxlint-generic.json` unless marked
 | `no-chained-type-assertions`                | `value as unknown as Target`                                                        | Parse, validate, or narrow once at the boundary                                   | Chained assertions discard evidence twice.                                      |
 | `no-broad-object-parameters`                | Function inputs typed as `object`                                                   | A named owner type or boundary-decoded value                                      | Broad inputs erase the caller contract.                                         |
 | `no-conditional-empty-object-spread`        | Conditional spreads that add `{}`                                                   | An explicit branch or named builder                                               | Output shape should remain visible.                                             |
+| `no-export-bag` `[opt-in]`                  | Three or more peer lowercase callable exports in a non-test module                  | A namespace class with static methods; inject dependencies through a service      | Cohesive domain operations need one explicit owner.                             |
 | `no-known-value-widening`                   | Widening a known initializer to `object`, `Record`, or another anonymous broad type | Preserve inference, `satisfies`, or a named owner contract                        | Widening throws away evidence the initializer already has.                      |
 | `no-module-mocking` `[opt-in]`              | Vitest/Jest module replacement in application tests                                 | Dependency injection or a faithful in-memory implementation                       | Mocks can hide broken wiring. Enable only when the test architecture allows it. |
 | `no-passthrough-variable`                   | A local `const alias = source` binding with no transform                            | Use `source` directly; explain required snapshots or narrowing with a suppression | Passthrough names obscure ownership without adding behavior.                    |
@@ -38,6 +39,8 @@ The rules below are enabled by `configs/oxlint-generic.json` unless marked
 | `no-unsafe-dictionary-type`                 | Dictionaries whose values are `unknown`, `any`, `object`, or `{}`                   | A named or schema-derived value type                                              | Dictionary reads otherwise spread uncertainty.                                  |
 | `no-widen-then-assert`                      | Widening a known value and asserting it back                                        | Preserve the precise value type                                                   | The assertion launders lost evidence.                                           |
 | `require-safety-comment-for-type-assertion` | Unexplained non-const assertions                                                    | A real narrowing operation or a nearby invariant comment                          | Unavoidable assertions need a stated invariant.                                 |
+
+`no-export-bag` defaults to three callable exports and accepts `minExports` and `excludePaths` options. It ignores hook exports (`useX`), PascalCase names, TSX, test/spec files, e2e, generated, and `node_modules` paths.
 
 ## Generic ast-grep profile
 
